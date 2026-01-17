@@ -1,0 +1,25 @@
+{
+  "name": "121-chart-print",
+  "version": "0.1.0",
+  "description": "Pixel-perfect 1:1 scale chart printing for technical and engineering workflows",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "node build.js",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/C3POAdmin/121-Chart-Print.git"
+  },
+  "author": "Chris",
+  "license": "MIT"
+}
