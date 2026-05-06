@@ -88,16 +88,39 @@ function getMin(min, div) {
     return nmin;
 }
 
-function getDivision(div, next) {
-    const threshHolds = [0.05, 0.1, 0.15, 0.20, 0.25, 0.3, 0.4, 0.5, 1, 1.2, 1.25, 1.5, 2, 2.4, 2.5, 3, 4, 5, 10, 12, 15, 20, 25, 30, 40, 50, 100, 120, 125, 140, 150, 200, 250, 300, 350, 500, 1000, 1200, 1400, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 10000, 20000, 30000, 40000, 50000, 100000];
+function getDivision(value, next) {
+    const steps = [1, 1.5, 2, 2.5, 3, 4, 5, 10];
 
-    for (let r = 0; r < threshHolds.length; r++) {
-        if (threshHolds[r] > div) {
-            if (next) {
-                return threshHolds[r + 1];
-            }
-            return threshHolds[r];
+    let sign = 1;
+
+    if (value < 0) {
+        sign = -1;
+        value = -value;
+    }
+
+    let scale = 1;
+
+    if (value > 0) {
+        while (value >= scale * 10) {
+            scale *= 10;
+        }
+        while (value < scale) {
+            scale /= 10;
         }
     }
-    console.log('[ERROR] Division not found');
+
+    for (let i = 0; i < steps.length; i++) {
+        const current = steps[i] * scale;
+        if (current > value) {
+            if (next) {
+                if (i < steps.length - 1) {
+                    return steps[i + 1] * scale * sign;
+                }
+                return steps[0] * scale * 10 * sign;
+            }
+            return current * sign;
+        }
+    }
+	
+    return scale * 10 * sign;
 }
